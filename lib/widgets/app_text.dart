@@ -14,10 +14,11 @@ class AppText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: style?.copyWith(
-        color: color,
+      style: style ?? TextStyle(
+        color: color ,
         fontSize: fontSize,
-        fontWeight: fontWeight,
+        fontWeight: fontWeight ,
+        letterSpacing: 0.84
       ),
     );
   }
