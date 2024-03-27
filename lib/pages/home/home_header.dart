@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tomisha_test/app/app_size.dart';
@@ -55,12 +56,27 @@ class HomeHeader extends StatelessWidget {
                 ],
               ),
               if (!context.isMobile)
-                Container(
-                  width: 455.dm,
-                  height: 455.dm,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
+                SizedBox(
+                  width: 500.dm,
+                  height: 500.dm,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 500.dm,
+                        height: 500.dm,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(1000.dm),
+                        child: SvgPicture.asset(
+                          Consts.homeHeaderSvgWeb,
+
+                        ),
+                      )
+                    ],
                   ),
                 ),
             ],
