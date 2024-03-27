@@ -12,7 +12,7 @@ class TabsButton extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: 560.0.sp * tabs.length,
+          width: 560.r * tabs.length,
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -70,7 +70,7 @@ class _Item extends StatelessWidget {
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
-              width: 560.0.sp,
+              width: 560.r,
               height: 40,
               decoration: BoxDecoration(
                 color:
