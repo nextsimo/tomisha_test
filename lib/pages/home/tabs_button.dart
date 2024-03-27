@@ -67,25 +67,28 @@ class _Item extends StatelessWidget {
           selector: (BuildContext context,HomeProvider provider) => provider.selectedIndex,
           builder: (context, int index, child) {
             final isSelected = index == this.index;
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-              width: 560.r,
-              height: 40,
-              decoration: BoxDecoration(
-                color:
-                    isSelected ? const Color(0xFF81E6D9) : Colors.transparent,
-                borderRadius: _getBorderRadius(),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: isSelected
-                      ? const Color(0xFFFFFFFF)
-                      : const Color(0xFF319795),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                width: 560.r,
+                height: 40,
+                decoration: BoxDecoration(
+                  color:
+                      isSelected ? const Color(0xFF81E6D9) : Colors.transparent,
+                  borderRadius: _getBorderRadius(),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: isSelected
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF319795),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             );
