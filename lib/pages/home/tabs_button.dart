@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:tomisha_test/provider/home_provider.dart';
 
-class TabsButton extends StatefulWidget {
+class TabsButton extends StatelessWidget {
   final List<String> tabs;
-  final void Function(int) onTabChanged;
-  const TabsButton({super.key, required this.tabs, required this.onTabChanged});
-
-  @override
-  State<TabsButton> createState() => _TabsButtonState();
-}
-
-class _TabsButtonState extends State<TabsButton> {
-  int _selectedIndex = 0;
+  const TabsButton({super.key, required this.tabs});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Container(
-          width: 160.0 * widget.tabs.length,
+          width: 560.0.sp * tabs.length,
           height: 40,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -29,18 +24,11 @@ class _TabsButtonState extends State<TabsButton> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: List.generate(
-            widget.tabs.length,
+            tabs.length,
             (index) => _Item(
-              isSelected: _selectedIndex == index,
-              text: widget.tabs[index],
+              text: tabs[index],
               index: index,
-              itemLength: widget.tabs.length,
-              onPressed: () {
-                widget.onTabChanged(index);
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
+              itemLength: tabs.length,
             ),
           ),
         ),
@@ -50,18 +38,12 @@ class _TabsButtonState extends State<TabsButton> {
 }
 
 class _Item extends StatelessWidget {
-  final bool isSelected;
   final String text;
   final int index;
   final int itemLength;
-  final VoidCallback onPressed;
 
   const _Item(
-      {required this.isSelected,
-      required this.text,
-      required this.index,
-      required this.itemLength,
-      required this.onPressed});
+      {required this.text, required this.index, required this.itemLength});
 
   // get border raduis depending on the index
   BorderRadius _getBorderRadius() {
@@ -76,26 +58,38 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.read<HomeProvider>();
     return InkWell(
-      onTap: onPressed,
-      child: Container(
-        width: 160,
-        height: 40,
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF81E6D9) : Colors.transparent,
-          borderRadius: _getBorderRadius(),
-        ),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyle(
-            color:
-                isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF319795),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
+      onTap: () {
+        provider.onTabChanged(index);
+      },
+      child: Selector<HomeProvider,int>(
+          selector: (BuildContext context,HomeProvider provider) => provider.selectedIndex,
+          builder: (context, int index, child) {
+            final isSelected = index == this.index;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              width: 560.0.sp,
+              height: 40,
+              decoration: BoxDecoration(
+                color:
+                    isSelected ? const Color(0xFF81E6D9) : Colors.transparent,
+                borderRadius: _getBorderRadius(),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: isSelected
+                      ? const Color(0xFFFFFFFF)
+                      : const Color(0xFF319795),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            );
+          }),
     );
   }
 }
