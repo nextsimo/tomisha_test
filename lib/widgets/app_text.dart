@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppText extends StatelessWidget {
   final String text;
@@ -7,18 +9,27 @@ class AppText extends StatelessWidget {
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
   final TextOverflow? overflow;
-  final TextStyle? style;
-  const AppText({super.key, required this.text, this.color, this.fontSize, this.fontWeight, this.textAlign, this.overflow, this.style});
+  final double? letterSpacing;
+  const AppText(
+      {super.key,
+      required this.text,
+      this.color,
+      this.fontSize,
+      this.fontWeight,
+      this.textAlign,
+      this.overflow,
+      this.letterSpacing = 0.84});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: style ?? TextStyle(
-        color: color ,
+      textAlign: textAlign,
+      style: GoogleFonts.lato(
+        color: color,
         fontSize: fontSize,
-        fontWeight: fontWeight ,
-        letterSpacing: 0.84
+        fontWeight: fontWeight,
+        letterSpacing: letterSpacing,
       ),
     );
   }
